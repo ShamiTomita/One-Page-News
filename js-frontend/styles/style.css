@@ -1,0 +1,67 @@
+.header {
+  background-color: #F1F1F1;
+  text-align: left;
+  padding: 2px;
+  width: 100%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Create three unequal columns that floats next to each other */
+.column {
+  float: left;
+  height: 500px; /* Should be removed. Only for demonstration */
+  margin-top: 1%;
+
+
+}
+
+.left, .right {
+  width: 25%;
+  border-style: dashed;
+
+}
+.weatherheader{
+  width: 100%;
+  text-align: center;
+  border-style: solid;
+}
+.pinnedheader{
+  width: 100%;
+  text-align: center;
+  border-style: solid;
+}
+
+.middle {
+  width: 50%;
+  border-style: solid;
+}
+.middleheader{
+  width: 100%;
+  text-align: center;
+  border-style: solid;
+}
+.middlecontent{
+  inline-size: 90%;
+  overflow-y:auto;
+  width: 100%;
+  height: 80%;
+  text-align:justify;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.footer {
+  margin-bottom: 0;
+  height: 55px;
+  text-align: center;
+  background: #ddd;
+  margin-top: 20px;
+}
