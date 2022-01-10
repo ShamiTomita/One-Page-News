@@ -1,3 +1,4 @@
 class Article < ApplicationRecord
-  belongs_to :user
+  has_many :favorited_articles
+  has_many :users, through: :favorited_articles
 end
