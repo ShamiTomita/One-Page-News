@@ -25,7 +25,8 @@ def createArticles(article_array)
       description: article.description,
       url: article.url,
       image_url: article.urlToImage,
-      published: article.publishedAt
+      published: article.publishedAt,
+      content: article.content
     )
   end
 end
