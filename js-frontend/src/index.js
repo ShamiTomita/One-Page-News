@@ -1,8 +1,10 @@
 const endPoint = "http://localhost:3000/api/v1/articles"
 
+
 document.addEventListener("DOMContentLoaded", () =>{
   console.log("Ive been Loaded!")
   getArticles();
+  toggleDisplay();
 })
 
 function getArticles(){
@@ -11,21 +13,60 @@ function getArticles(){
   .then(articles=>{
     console.log(articles);
     articles.data.forEach((article) => {
+      let id = article.id
       const articleMarkup = `
-      <li id=${article.attributes.id}>
+      <li id=${article.id}>
         <img src=${article.attributes.image_url}>
-        <a href=${article.attributes.url}>${article.attributes.title}</a>
+        <a id=${article.id} class="article-link" href=${article.attributes.url} onclick="fetchDisplay(${id})" >${article.attributes.title}</a>
       </li>`
       document.querySelector('#articles').innerHTML += articleMarkup
+      stopLink();
+
     });
-    document.getElementById('#articles').style.overflow = "scroll";
   })
 }
 
-index.addEventListener("click", ()=>{
-  console.log("Ive been clicked!")
-})
 
-toggle.addEventListener("click", ()=>{
-  console.log("Ive been clicked!")
-})
+
+function stopLink(){
+let anchors = document.getElementsByTagName('a')
+  for (let i = 0; i < anchors.length; i++){
+    anchors[i].addEventListener("click",
+    function (e){
+            e.preventDefault();
+            console.log(anchors[i])
+
+            });
+          }
+}
+
+function toggleDisplay(){
+  let toggle = document.querySelector("body > div.row > div.column.middle > div.column.toggle")
+  let back = document.querySelector("#myTopnav > a:nth-child(2)")
+  let middleContent = document.querySelector("body > div.row > div.column.middle > div.middleContent")
+  if (toggle.style.display === "none"){
+    toggle.style.display = "block";
+    middleContent.style.display = "none"
+  }else {
+    toggle.style.display = "none";
+    middleContent.style.display = "block"
+  }
+}
+
+function fetchDisplay(articleId){
+  let toggle = document.querySelector("body > div.row > div.column.middle > div.column.toggle")
+  let articleEndPoint = (endPoint+`/${articleId}`)
+  fetch(articleEndPoint)
+  .then(response => response.json())
+  .then(article=>{
+    const articleMarkup = `
+    <h2>${article.title}</h2>
+      <img src=${article.image_url}>
+      <h3>${article.author}, ${article.news_org}</h3>
+      <p>${article.content}</p>
+    </li>`
+    toggle.innerHTML = articleMarkup;
+    toggleDisplay();
+  })
+
+  }
