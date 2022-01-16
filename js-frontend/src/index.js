@@ -47,6 +47,7 @@ function toggleDisplay(){
   if (toggle.style.display === "none"){
     toggle.style.display = "block";
     middleContent.style.display = "none"
+
   }else {
     toggle.style.display = "none";
     middleContent.style.display = "block"
@@ -55,6 +56,7 @@ function toggleDisplay(){
 
 function fetchDisplay(articleId){
   let toggle = document.querySelector("body > div.row > div.column.middle > div.column.toggle")
+  document.querySelector("body > div.row > div.column.middle").scrollTo(0,0)
   let articleEndPoint = (endPoint+`/${articleId}`)
   fetch(articleEndPoint)
   .then(response => response.json())
@@ -68,5 +70,4 @@ function fetchDisplay(articleId){
     toggle.innerHTML = articleMarkup;
     toggleDisplay();
   })
-
   }

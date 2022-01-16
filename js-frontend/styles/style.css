@@ -23,7 +23,7 @@ img {
   float: left;
   height: 500px; /* Should be removed. Only for demonstration */
   margin-top: 1%;
-overflow-y:scroll;
+
 
 }
 
@@ -65,7 +65,7 @@ table, th, td {
 .middle {
   width: 50%;
   border-style: solid;
-
+  overflow-y:scroll;
 }
 .middleheader{
   width: 100%;
@@ -110,7 +110,6 @@ table, th, td {
 }
 
 #articles{
-overflow:auto;
 }
 
 .toggle{
@@ -119,6 +118,7 @@ overflow:auto;
   border-style: solid;
   background-color: pink;
   display: block;
+
 }
 /* Clear floats after the columns */
 .row:after {
