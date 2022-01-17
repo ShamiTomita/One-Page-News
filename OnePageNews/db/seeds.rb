@@ -42,6 +42,7 @@ user = User.create(name: "shami", zipcode: "78249")
 business_array =  createArticles(business_articles)
 business_array.each do |article|
   article.category = "business"
+  article.save
 end
 entertainment_array = createArticles(entertainment_articles)
 entertainment_array.each do |article|
@@ -63,11 +64,13 @@ sports_array.each do |article|
   article.category = "sports"
   article.save
 end
+
 tech_array = createArticles(technology_articles)
 tech_array.each do |article|
   article.category = "entertainment"
   article.save
 end
+
 top_array = createArticles(top_headlines)
 top_array.each do |article|
   article.is_top = true

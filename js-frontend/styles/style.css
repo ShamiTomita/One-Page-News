@@ -71,12 +71,16 @@ table, th, td {
 .middle {
   width: 50%;
   border-style: solid;
+  overflow-y: scroll;
 
 }
 div.middleheader{
   background-color: #333;
  overflow: auto;
  white-space: nowrap;
+ height: auto;
+ position: fixed;
+ width: 49%;
 
 }
 
@@ -84,16 +88,17 @@ div.topnav a{
 display: inline-block;
 color: white;
 text-align: center;
-padding: 20px;
+padding: 18px;
 text-decoration: none;
 }
 
 li:last-child {
   border-right: none;
-  position: fixed;
+  float: right;
 }
 
 .middleContent{
+  padding-top: 50px;
 }
 
 #articles{
@@ -101,12 +106,14 @@ li:last-child {
 
 .toggle{
   width:100%;
-  height: 440px;
-  padding-bottom: 30px;
+  height: 500px;
+  padding-top: 50px;
+  padding-left: 10px;
   border-style: solid;
   background-color: pink;
   display: block;
   margin-top: 0;
+
 }
 
 #toggledBar{
@@ -123,7 +130,7 @@ li:last-child {
 }
 .footer {
   margin-bottom: 0;
-  height: 55px;
+  height: 50px;
   text-align: center;
   background: #ddd;
   margin-top: 20px;
