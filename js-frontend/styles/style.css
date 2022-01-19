@@ -4,7 +4,28 @@
   padding: 2px;
   width: 100%;
 }
+img {
+  width:10%;
+  border-radius: 5px;
+  margin: 5px;
 
+}
+
+.signInContainer{
+  width: 100%;
+  height: 100%;
+  top: 0;
+  position: absolute;
+  background-color: white;
+  z-index: 1;
+  visibility: visible;
+  display: block;
+
+}
+#weather-icon{
+  width: inherit;
+
+}
 * {
   box-sizing: border-box;
 }
@@ -24,11 +45,15 @@
   align-items: center;
   justify-content: center;
   text-align: center;
+  overflow: auto;
 }
 .weatherheader{
   width: 100%;
   text-align: center;
   border-style: solid;
+  overflow: auto;
+  white-space: nowrap;
+  position: sticky;
 }
 
 table{
@@ -44,6 +69,8 @@ table, th, td {
   width: 100%;
   text-align: center;
   border-style: solid;
+  overflow: auto;
+  white-space: nowrap;
 }
 
 .rowright{
@@ -56,49 +83,56 @@ table, th, td {
 .middle {
   width: 50%;
   border-style: solid;
+  overflow-y: scroll;
+
 }
-.middleheader{
-  width: 100%;
-  text-align: center;
-  border-style: solid;
-}
-.topnav {
+div.middleheader{
   background-color: #333;
-  overflow: hidden;
-  width: 100%;
-  text-align: center;
+ overflow: auto;
+ white-space: nowrap;
+ height: auto;
+ position: fixed;
+ width: 49%;
+
+}
+
+div.topnav a{
+display: inline-block;
+color: white;
+text-align: center;
+padding: 18px;
+text-decoration: none;
+}
+
+li:last-child {
+  border-right: none;
+  float: right;
+}
+
+.middleContent{
+  padding-top: 50px;
+}
+
+#articles{
+}
+
+.toggle{
+  width:100%;
+  height: 500px;
+  padding-top: 50px;
+  padding-left: 10px;
   border-style: solid;
+  background-color: pink;
+  display: block;
+  margin-top: 0;
+
 }
 
-/* Style the links inside the navigation bar */
-.topnav a {
-  float: left;
-  color: #f2f2f2;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  font-size: 17px;
-}
-
-/* Change the color of links on hover */
-.topnav a:hover {
-  background-color: #ddd;
-  color: black;
-}
-
-/* Add a color to the active/current link */
-.topnav a.active {
-  background-color: #04AA6D;
+#toggledBar{
+  display: inline-block;
   color: white;
-}
-.middlecontent{
-  inline-size: 90%;
-  overflow-y:auto;
-  width: 100%;
-  height: 80%;
-  text-align:justify;
-  padding-left: 15px;
-  padding-right: 15px;
+  text-align: center;
+  text-decoration: none;
 }
 /* Clear floats after the columns */
 .row:after {
@@ -108,7 +142,7 @@ table, th, td {
 }
 .footer {
   margin-bottom: 0;
-  height: 55px;
+  height: 50px;
   text-align: center;
   background: #ddd;
   margin-top: 20px;
