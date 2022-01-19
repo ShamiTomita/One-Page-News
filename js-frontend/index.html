@@ -8,6 +8,18 @@
   </head>
 
   <body>
+    <div class="signInContainer">
+      <div class="form-container">
+        <form id="sign-in" style="">
+          <h1>Hi! Please provide your name and zipcode</h1>
+          <input id="input-name" type="text" name="name" value="" placeholder="Enter Name">
+          <br></br>
+          <input id="input-zipcode" type="text" name="zipcode" value="" placeholder="Enter Zipcode">
+          <br></br>
+          <input id= 'create-button' type="submit" name="submit" value="Lets Get Started!" class="submit">
+        </form>
+      </div>
+    </div>
     <div class="header">
       <h1>One Page News</h1>
     </div>
@@ -19,8 +31,8 @@
       </div>
       <div class=weather>
       <img src="http://openweathermap.org/img/wn/10d@2x.png" id="weather-icon">
-        <p> Partly Cloudy </p>
-        <p>Current Temperature: 80 </p>
+        <p id="current-weather"> Partly Cloudy </p>
+        <p id="current-Temperature"> Current Temperature: 80 </p>
         <h5> Weekly Forecast </h5>
         <table>
           <tr>

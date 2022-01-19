@@ -1,8 +1,10 @@
 const endPoint = "http://localhost:3000/api/v1/articles"
+const userPoint = "http://localhost:3000/api/v1/users"
 
 
 document.addEventListener("DOMContentLoaded", () =>{
   console.log("Ive been Loaded!")
+  signIn();
   getArticles();
   toggleDisplay();
 })
@@ -185,7 +187,61 @@ function fetchDisplay(articleId){
       <p>${article.content}</p>
     </li>`
     toggle.innerHTML = articleMarkup;
-    indextog.innerHTML = `${article.news_org}`
+    indextog.innerHTML = `${article.category}`
     toggleDisplay();
   })
   }
+
+function signIn(){
+  let b = document.querySelector("#sign-in")
+  let a = document.querySelector("body > div.signInContainer")
+  b.addEventListener("submit", (e) => {
+    createFormHandler(e)
+    a.style.display="none"
+    console.log("get rid of me!")
+  }
+
+  )
+}
+
+function createFormHandler(e){
+  e.preventDefault()
+  const nameInput = document.querySelector('#input-name').value
+  const zipcodeInput = document.querySelector('#input-zipcode').value
+  postUser(nameInput, zipcodeInput)
+}
+
+function postUser(nameInput, zipcodeInput){
+  console.log(nameInput, zipcodeInput)
+
+  let bodyData = {nameInput, zipcodeInput}
+  fetch(userPoint, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json"},
+    body: JSON.stringify({
+      name: nameInput,
+      zipcode: zipcodeInput
+    })
+  })
+  .then(response => response.json())
+  .then(user => {
+    let weatherZone = document.querySelector("body > div.row > div.column.left > div.weatherheader")
+    const userMarkup = `
+      <p>${user.name} ${user.zipcode}</p>
+      <p>${user.lat} ${user.lon}</p>
+    `
+    weatherZone.innerHTML += userMarkup
+    let lat = user.lat
+    let lon = user.lon
+    /* function should go here */
+    let weatherPoint = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude={part}&appid=b7bfa861214865eea90a83b5ecc80c7e`
+  fetch(weatherPoint)
+  .then(res => res.json())
+  .then(result => {
+    console.log(result)
+  })
+
+  })
+}

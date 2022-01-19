@@ -10,6 +10,18 @@ img {
   margin: 5px;
 
 }
+
+.signInContainer{
+  width: 100%;
+  height: 100%;
+  top: 0;
+  position: absolute;
+  background-color: white;
+  z-index: 1;
+  visibility: visible;
+  display: block;
+
+}
 #weather-icon{
   width: inherit;
 
