@@ -4,6 +4,7 @@ const userPoint = "http://localhost:3000/api/v1/users"
 
 document.addEventListener("DOMContentLoaded", () =>{
   console.log("Ive been Loaded!")
+  addDays();
   signIn();
   getArticles();
   toggleDisplay();
@@ -232,16 +233,73 @@ function postUser(nameInput, zipcodeInput){
       <p>${user.name} ${user.zipcode}</p>
       <p>${user.lat} ${user.lon}</p>
     `
-    weatherZone.innerHTML += userMarkup
+
     let lat = user.lat
     let lon = user.lon
     /* function should go here */
-    let weatherPoint = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude={part}&appid=b7bfa861214865eea90a83b5ecc80c7e`
+    let weatherPoint = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=imperial&exclude=minutely&appid=b7bfa861214865eea90a83b5ecc80c7e`
   fetch(weatherPoint)
   .then(res => res.json())
   .then(result => {
     console.log(result)
+    debugger
+    let currentTemp = result.current.temp+String.fromCharCode(176)
+    let currentHumidity = result.current.humidity
+    let currentFeelsLike = result.current.feels_like+String.fromCharCode(176)
+    let currentWeather = result.current.weather[0].main
+    let currentIcon = result.current.weather[0].icon
+      if (!result.alerts.length === 0){
+        let alertName = result.alerts[0].event
+        let alertDesc = result.alerts[0].description
+      }
+    let weatherIconUrl = `http://openweathermap.org/img/wn/${currentIcon}@2x.png`
+
+    let weatherIcon = document.querySelector("#weather-icon")
+      weatherIcon.src = weatherIconUrl
+    let cw = document.querySelector("#current-weather")
+      cw.innerHTML = currentWeather
+    let ct = document.querySelector("#current-temperature")
+      ct.innerHTML = currentTemp
+
+
+    let day2Temp = (result.daily[1].temp["max"].toString()+String.fromCharCode(176) +("/")+ result.daily[1].temp["min"].toString()+String.fromCharCode(176))
+    let day3Temp = (result.daily[2].temp["max"].toString()+String.fromCharCode(176) +("/")+ result.daily[2].temp["min"].toString()+String.fromCharCode(176))
+    let day4Temp = (result.daily[3].temp["max"].toString()+String.fromCharCode(176) +("/")+ result.daily[3].temp["min"].toString()+String.fromCharCode(176))
+    let day5Temp = (result.daily[4].temp["max"].toString()+String.fromCharCode(176) +("/")+ result.daily[4].temp["min"].toString()+String.fromCharCode(176))
+    let day6Temp = (result.daily[5].temp["max"].toString()+String.fromCharCode(176) +("/")+ result.daily[5].temp["min"].toString()+String.fromCharCode(176))
+    let day7Temp = (result.daily[6].temp["max"].toString()+String.fromCharCode(176) +("/")+ result.daily[6].temp["min"].toString()+String.fromCharCode(176))
+    let d2 = document.querySelector("#day-2-t")
+      d2.innerHTML = day2Temp
+    let d3 = document.querySelector("#day-3-t")
+      d3.innerHTML= day3Temp
+    let d4 = document.querySelector("#day-4-t")
+      d4.innerHTML= day4Temp
+    let d5 = document.querySelector("#day-5-t")
+      d5.innerHTML= day5Temp
+    let d6 = document.querySelector("#day-6-t")
+      d6.innerHTML= day6Temp
+    let d7 = document.querySelector("#day-7-t")
+      d7.innerHTML= day7Temp
   })
 
   })
+}
+
+function addDays(){
+  let dayOne = document.querySelector("#current-day")
+  let dayTwo = document.querySelector("#day-2")
+  let dayThree = document.querySelector("#day-3")
+  let dayFour = document.querySelector("#day-4")
+  let dayFive = document.querySelector("#day-5")
+  let daySix = document.querySelector("#day-6")
+  let daySeven = document.querySelector("#day-7")
+
+  dayOne.innerHTML = Date.today().toDateString().split(" ")[0]
+  dayTwo.innerHTML = Date.parse("+").toDateString().split(" ")[0]
+  dayThree.innerHTML = Date.parse("+2").toDateString().split(" ")[0]
+  dayFour.innerHTML =  Date.parse("+3").toDateString().split(" ")[0]
+  dayFive.innerHTML =  Date.parse("+4").toDateString().split(" ")[0]
+  daySix.innerHTML = Date.parse("+5").toDateString().split(" ")[0]
+  daySeven.innerHTML = Date.parse("+6").toDateString().split(" ")[0]
+
 }
