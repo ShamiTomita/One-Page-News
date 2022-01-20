@@ -7,9 +7,17 @@
 img {
   width:10%;
   border-radius: 5px;
-  margin: 5px;
+
 
 }
+.article-img{
+  margin: 10px;
+}
+.table-icon{
+  height:30px;
+  width:30px;
+}
+
 
 .signInContainer{
   width: 100%;
@@ -22,9 +30,16 @@ img {
   display: block;
 
 }
+ p.w{
+  margin:0
+}
+h5{
+  margin:10px;
+}
 #weather-icon{
-  width: inherit;
-
+  width: 60px;
+  height: 60px;
+  margin: 0;
 }
 * {
   box-sizing: border-box;
@@ -114,6 +129,7 @@ li:last-child {
 }
 
 #articles{
+  margin-top: 5px;
 }
 
 .toggle{

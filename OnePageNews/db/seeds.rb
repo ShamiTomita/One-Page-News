@@ -1,6 +1,7 @@
 require 'news-api'
 require 'area'
-
+Article.destroy_all
+User.destroy_all
 newsapi = News.new("942d82be5ab04c0e810e412394d04c7a")
 sources = newsapi.get_sources(country: 'us', language: 'en')
 #business entertainment general health science sports technology

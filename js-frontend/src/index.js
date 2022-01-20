@@ -113,7 +113,7 @@ function getArticles(){
             let id = article.id
             const articleMarkup = `
             <div id=${article.id}>
-              <img src=${article.attributes.image_url}>
+              <img class="article-img"src=${article.attributes.image_url}>
               <a id=${article.id} class="article-link" href=${article.attributes.url} onclick="fetchDisplay(${id})">${article.attributes.title}</a>
             </div>`
             art.innerHTML += articleMarkup
@@ -248,7 +248,7 @@ function postUser(nameInput, zipcodeInput){
     let currentFeelsLike = result.current.feels_like+String.fromCharCode(176)
     let currentWeather = result.current.weather[0].main
     let currentIcon = result.current.weather[0].icon
-      if (!result.alerts.length === 0){
+      if (!result.alerts === null){
         let alertName = result.alerts[0].event
         let alertDesc = result.alerts[0].description
       }
@@ -257,9 +257,9 @@ function postUser(nameInput, zipcodeInput){
     let weatherIcon = document.querySelector("#weather-icon")
       weatherIcon.src = weatherIconUrl
     let cw = document.querySelector("#current-weather")
-      cw.innerHTML = currentWeather
+      cw.innerHTML += currentWeather
     let ct = document.querySelector("#current-temperature")
-      ct.innerHTML = currentTemp
+      cw.innerHTML += (" " + currentTemp)
 
 
     let day2Temp = (result.daily[1].temp["max"].toString()+String.fromCharCode(176) +("/")+ result.daily[1].temp["min"].toString()+String.fromCharCode(176))
@@ -268,6 +268,49 @@ function postUser(nameInput, zipcodeInput){
     let day5Temp = (result.daily[4].temp["max"].toString()+String.fromCharCode(176) +("/")+ result.daily[4].temp["min"].toString()+String.fromCharCode(176))
     let day6Temp = (result.daily[5].temp["max"].toString()+String.fromCharCode(176) +("/")+ result.daily[5].temp["min"].toString()+String.fromCharCode(176))
     let day7Temp = (result.daily[6].temp["max"].toString()+String.fromCharCode(176) +("/")+ result.daily[6].temp["min"].toString()+String.fromCharCode(176))
+
+    let day2Icon = result.daily[1].weather[0].icon
+    let day2Desc = result.daily[1].weather[0].main
+    let day2Fc = document.querySelector("#day-2-fc")
+    let day2Img = document.querySelector("#day2Img")
+    day2Fc.innerHTML += day2Desc
+    day2Img.src = `http://openweathermap.org/img/wn/${day2Icon}@2x.png`
+
+    let day3Icon = result.daily[2].weather[0].icon
+    let day3Desc = result.daily[2].weather[0].main
+    let day3Fc = document.querySelector("#day-3-fc")
+    let day3Img = document.querySelector("#day3Img")
+    day3Fc.innerHTML += day3Desc
+    day3Img.src = `http://openweathermap.org/img/wn/${day3Icon}@2x.png`
+
+    let day4Icon = result.daily[3].weather[0].icon
+    let day4Desc = result.daily[3].weather[0].main
+    let day4Fc = document.querySelector("#day-4-fc")
+    let day4Img = document.querySelector("#day4Img")
+    day4Fc.innerHTML += day4Desc
+    day4Img.src = `http://openweathermap.org/img/wn/${day4Icon}@2x.png`
+
+    let day5Icon = result.daily[4].weather[0].icon
+    let day5Desc = result.daily[4].weather[0].main
+    let day5Fc = document.querySelector("#day-5-fc")
+    let day5Img = document.querySelector("#day5Img")
+    day5Fc.innerHTML += day5Desc
+    day5Img.src = `http://openweathermap.org/img/wn/${day5Icon}@2x.png`
+
+    let day6Icon = result.daily[5].weather[0].icon
+    let day6Desc = result.daily[5].weather[0].main
+    let day6Fc = document.querySelector("#day-6-fc")
+    let day6Img = document.querySelector("#day6Img")
+    day6Fc.innerHTML += day6Desc
+    day6Img.src = `http://openweathermap.org/img/wn/${day6Icon}@2x.png`
+
+    let day7Icon = result.daily[6].weather[0].icon
+    let day7Desc = result.daily[6].weather[0].main
+    let day7Fc = document.querySelector("#day-7-fc")
+    let day7Img = document.querySelector("#day7Img")
+    day7Fc.innerHTML += day7Desc
+    day7Img.src = `http://openweathermap.org/img/wn/${day7Icon}@2x.png`
+
     let d2 = document.querySelector("#day-2-t")
       d2.innerHTML = day2Temp
     let d3 = document.querySelector("#day-3-t")
