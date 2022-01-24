@@ -93,6 +93,16 @@ table, th, td {
   width: 100%;
   border-style: dashed;
 
+
+}
+.draggable{
+  cursor:move;
+  style:strong;
+  border-style: solid;
+  border-color: green;
+}
+.draggable.dragging{
+  opacity: .5;
 }
 
 .middle {
@@ -157,9 +167,44 @@ li:last-child {
   clear: both;
 }
 .footer {
-  margin-bottom: 0;
-  height: 50px;
-  text-align: center;
   background: #ddd;
-  margin-top: 20px;
+  margin-top: 10px;
+  position: relative;
+  max-width: 800;
+  overflow: hidden;
+
+
 }
+.hwrap{
+height:50px;
+
+
+position: relative;
+text-transform: uppercase;
+letter-spacing: 1px;
+font-size: 20px;
+font-weight: 500;
+overflow: hidden;
+
+animation-duration: 120s;
+
+
+}
+.hmove{
+  display:flex;
+  text-align: center;
+  animation-duration: 300s;
+}
+.hitem{
+  padding-top: 10px;
+  flex-shrink: 0;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+}
+@keyframes tickerh {
+  0% { transform: translate3d(100%, 0, 0); }
+  100% { transform: translate3d(-2000%, 0, 0); }
+}
+.hmove { animation: tickerh linear 120s infinite; }
+.hmove:hover { animation-play-state: paused; }

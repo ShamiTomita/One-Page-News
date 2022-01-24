@@ -8,6 +8,11 @@ document.addEventListener("DOMContentLoaded", () =>{
   signIn();
   getArticles();
   toggleDisplay();
+
+
+
+
+
 })
 
 function getArticles(){
@@ -15,16 +20,20 @@ function getArticles(){
   let science = []
   let entertainment = []
   let business = []
-  let top = []
+  let topArts = []
   let all = []
+
   fetch(endPoint)
   .then(response => response.json())
   .then(articles=>{
+
     articles.data.forEach((article) => {
       let id = article.id
-      if (article.attributes.is_top === "true"){
-        top.push(article)
-        all.push(article)
+      let tickerMarkUp = ` <div class=hitem><a class="article-link" href=${article.attributes.url} onclick="fetchDisplay(${id})">${article.attributes.title}</a></div>`
+      let ticker = document.querySelector(".hmove")
+      if (article.attributes.is_top === true){
+        topArts.push(article)
+        ticker.innerHTML+=tickerMarkUp
       }
       if (article.attributes.category === "health"){
         health.push(article)
@@ -48,8 +57,10 @@ function getArticles(){
         <img src=${article.attributes.image_url}>
         <a id=${article.id} class="article-link" href=${article.attributes.url} onclick="fetchDisplay(${id})" >${article.attributes.title}</a>
       </div>`
+
       document.querySelector('#articles').innerHTML += articleMarkup
       stopLink();
+
     });
 
     let healthButton = document.querySelector("#myTopnav > a:nth-child(2)")
@@ -69,7 +80,7 @@ function getArticles(){
           all.forEach(article => {
             let id = article.id
             const articleMarkup = `
-            <div id=${article.id}>
+            <div id=${article.id} >
               <img src=${article.attributes.image_url}>
               <a id=${article.id} class="article-link" href=${article.attributes.url} onclick="fetchDisplay(${id})">${article.attributes.title}</a>
             </div>`
@@ -85,8 +96,8 @@ function getArticles(){
             const articleMarkup = `
             <div id=${article.id}>
               <img src=${article.attributes.image_url}>
-              <a id=${article.id} class="article-link" href=${article.attributes.url} onclick="fetchDisplay(${id})">${article.attributes.title}</a>
-            </div>`
+              <a id=${article.id} class="article-link" href=${article.attributes.url} onclick="fetchDisplay(${id})"> ${article.attributes.title} </a>
+             </div> `
             art.innerHTML += articleMarkup
             stopLink();
           });
@@ -97,7 +108,7 @@ function getArticles(){
           entertainment.forEach(article => {
             let id = article.id
             const articleMarkup = `
-            <div id=${article.id}>
+            <div id=${article.id} >
               <img src=${article.attributes.image_url}>
               <a id=${article.id} class="article-link" href=${article.attributes.url} onclick="fetchDisplay(${id})">${article.attributes.title}</a>
             </div>`
@@ -112,7 +123,7 @@ function getArticles(){
           science.forEach(article => {
             let id = article.id
             const articleMarkup = `
-            <div id=${article.id}>
+            <div id=${article.id} >
               <img class="article-img"src=${article.attributes.image_url}>
               <a id=${article.id} class="article-link" href=${article.attributes.url} onclick="fetchDisplay(${id})">${article.attributes.title}</a>
             </div>`
@@ -242,7 +253,7 @@ function postUser(nameInput, zipcodeInput){
   .then(res => res.json())
   .then(result => {
     console.log(result)
-    debugger
+
     let currentTemp = result.current.temp+String.fromCharCode(176)
     let currentHumidity = result.current.humidity
     let currentFeelsLike = result.current.feels_like+String.fromCharCode(176)
