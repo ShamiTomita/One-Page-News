@@ -1,6 +1,8 @@
 const endPoint = "http://localhost:3000/api/v1/articles"
 const userPoint = "http://localhost:3000/api/v1/users"
-
+const favePoint = "http://localhost:3000/api/v1/favorited_articles"
+let numberFaves = 0
+let userId = 0
 
 document.addEventListener("DOMContentLoaded", () =>{
   console.log("Ive been Loaded!")
@@ -145,7 +147,6 @@ function getArticles(){
             stopLink();
           });
         }
-        console.log('I should be one single button')
       })
     });
   })
@@ -165,26 +166,36 @@ let anchors = document.getElementsByTagName('a')
           }
 }
 
-function toggleDisplay(){
+function toggleDisplay(articleId){
   let toggle = document.querySelector("body > div.row > div.column.middle > div.column.toggle")
   let back = document.querySelector("#myTopnav > a:nth-child(2)")
   let middleContent = document.querySelector("body > div.row > div.column.middle > div.middleContent")
   let toggledBar = document.querySelector("#toggledBar")
   let myTopnav = document.querySelector("#myTopnav")
+  let faveId = document.querySelector(`#fave-id`)
+  let artId = document.querySelector(`#art-id`)
+
   if (toggle.style.display === "none"){
     toggle.style.display = "block";
     toggledBar.style.display ="inline-block"
+    favorite(articleId)
     middleContent.style.display = "none"
     myTopnav.style.display = "none"
+
   }else {
+    if (faveId && faveId.innerText === artId.dataset.id){
+      console.log("raspberries")
+    }else{
     toggle.style.display = "none";
     toggledBar.style.display = "none"
     middleContent.style.display = "block"
     myTopnav.style.display = "inline-block"
-  }
+  }}
 }
 
 function fetchDisplay(articleId){
+  let faveId = document.querySelector(`#fave-id`)
+  let artId = document.querySelector(`#art-id`)
   let toggle = document.querySelector("body > div.row > div.column.middle > div.column.toggle")
   document.querySelector("body > div.row > div.column.middle").scrollTo(0,0)
   let indextog = document.querySelector("#indextog")
@@ -194,13 +205,15 @@ function fetchDisplay(articleId){
   .then(article=>{
     const articleMarkup = `
     <h2>${article.title}</h2>
-      <img src=${article.image_url}>
+      <p id="art-id" data-id=${article.id} style="display:none">${article.id}</p>
+      <span><img src=${article.image_url}><button style="float: right; align:center; margin-right: 10px;"class="favorite" id=art-${article.id}>heart</button></spn>
       <h3>${article.author}, ${article.news_org}</h3>
       <p>${article.content}</p>
     </li>`
     toggle.innerHTML = articleMarkup;
     indextog.innerHTML = `${article.category}`
-    toggleDisplay();
+    toggleDisplay(articleId);
+    ;
   })
   }
 
@@ -210,7 +223,6 @@ function signIn(){
   b.addEventListener("submit", (e) => {
     createFormHandler(e)
     a.style.display="none"
-    console.log("get rid of me!")
   }
 
   )
@@ -247,6 +259,7 @@ function postUser(nameInput, zipcodeInput){
 
     let lat = user.lat
     let lon = user.lon
+    userId = user.id
     /* function should go here */
     let weatherPoint = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=imperial&exclude=minutely&appid=b7bfa861214865eea90a83b5ecc80c7e`
   fetch(weatherPoint)
@@ -356,4 +369,74 @@ function addDays(){
   daySix.innerHTML = Date.parse("+5").toDateString().split(" ")[0]
   daySeven.innerHTML = Date.parse("+6").toDateString().split(" ")[0]
 
+}
+
+function favorite(articleId){
+  let favoriteButton = document.querySelector(`#art-${articleId}`)
+  favoriteButton.addEventListener("click", favoriteMark, true)
+}
+function favoriteMark(e){
+  e.preventDefault
+  let articleId = parseInt(document.querySelector("#art-id").dataset.id)
+  console.log(articleId)
+  console.log(userId)
+
+  fetch(favePoint, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json"},
+    body: JSON.stringify({
+      user_id: userId,
+      article_id: articleId
+    })
+  })
+  .then(response => response.json())
+  .then(fave => {
+    console.log(fave)
+
+    let faveOne = document.querySelector("body > div.row > div.column.right > div:nth-child(2)")
+    let faveTwo = document.querySelector("body > div.row > div.column.right > div:nth-child(3)")
+    let faveThree = document.querySelector("body > div.row > div.column.right > div:nth-child(4)")
+    let faveMarkUp = `
+    <h4 style="white-space: normal">${fave.data.attributes.article.title}</h4>
+    <p id=fave-id data=${fave.data.attributes.article.id} stye="display:none">${fave.data.attributes.article.id}</p>
+    <a onclick="fetchDisplay(${fave.data.attributes.article.id})"><img style="white-space: normal" class=faveimg src="${fave.data.attributes.article.image_url}"></img></a>
+    `
+    if (faveOne.innerText === "" && faveMarkUp != faveTwo.innerHTML && faveMarkUp != faveThree.innerHTML){
+      faveOne.innerHTML = faveMarkUp
+      debugger
+      unfavorite(articleId)
+    }else if (faveTwo.innerText === "" && faveMarkUp != faveOne.innerHTML && faveMarkUp != faveThree.innerHTML){
+      debugger
+      faveTwo.innerHTML = faveMarkUp
+      unfavorite(articleId)
+    }else if(faveThree.innerText === ""&& faveMarkUp != faveTwo.innerHTML && faveMarkUp != faveTwo.innerHTML){
+      faveThree.innerHTML = faveMarkUp
+      unfavorite(articleId)
+    }
+  })
+}
+
+function unfavorite(articleId){
+  let favoriteButton = document.querySelector(`#art-${articleId}`)
+  favoriteButton.innerText = "unfavorite"
+  favoriteButton.removeEventListener("click", favoriteMark, true)
+  favoriteButton.addEventListener("click", clearFave, true)
+
+
+}
+
+function clearFave(e){
+  e.preventDefault
+  let faveParent = document.querySelector(`#fave-id`).parentElement
+  let artId = document.querySelector(`#art-id`).dataset.id
+  let favoriteButton = document.querySelector(`#art-${artId}`)
+  let faveId = document.querySelector(`#fave-id`).innerText
+  if (artId === faveId){
+    faveParent.innerHTML = " "
+    document.querySelector(`#art-${artId}`).innerText = "favorite"
+    favoriteButton.removeEventListener("click", clearFave, true)
+    favoriteButton.addEventListener("click", favoriteMark, true)
+  }
 }

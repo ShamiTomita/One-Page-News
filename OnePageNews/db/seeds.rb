@@ -40,6 +40,7 @@ def createArticles(article_array)
 end
 
 user = User.create(name: "shami", zipcode: "78249")
+
 business_array =  createArticles(business_articles)
 business_array.each do |article|
   article.category = "business"
@@ -78,6 +79,6 @@ top_array.each do |article|
   article.save
 end
 
-
+fave = FavoritedArticle.create(user_id: user.id, article_id:Article.first.id)
 
 #WEATHER

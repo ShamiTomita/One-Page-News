@@ -13,6 +13,10 @@ img {
 .article-img{
   margin: 10px;
 }
+.fave-img{
+  height:30px;
+  width:30px;
+}
 .table-icon{
   height:30px;
   width:30px;
@@ -86,13 +90,16 @@ table, th, td {
   border-style: solid;
   overflow: auto;
   white-space: nowrap;
+  position: sticky;
 }
 
 .rowright{
   height: 29%;
   width: 100%;
   border-style: dashed;
-
+  white-space: nowrap;
+flex-shrink: 1;
+  overflow: scroll;
 
 }
 .draggable{
@@ -156,9 +163,21 @@ li:last-child {
 
 #toggledBar{
   display: inline-block;
-  color: white;
-  text-align: center;
+  background-color: red;
+  text-align: left;
   text-decoration: none;
+  float:left;
+  overflow-x: scroll;
+  white-space: nowrap;
+  position: relative;
+  display: inline-block;
+  width:100%;
+  margin-right: 10px;
+
+}
+
+#favorite{
+  float:right;
 }
 /* Clear floats after the columns */
 .row:after {
@@ -186,14 +205,13 @@ font-size: 20px;
 font-weight: 500;
 overflow: hidden;
 
-animation-duration: 120s;
-
 
 }
 .hmove{
   display:flex;
   text-align: center;
   animation-duration: 300s;
+  text-decoration: none;
 }
 .hitem{
   padding-top: 10px;
