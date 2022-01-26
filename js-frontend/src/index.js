@@ -3,6 +3,9 @@ const userPoint = "http://localhost:3000/api/v1/users"
 const favePoint = "http://localhost:3000/api/v1/favorited_articles"
 let numberFaves = 0
 let userId = 0
+let faveId = document.querySelector(`#fave-id`)
+let faveIds = document.querySelectorAll(`#fave-id`)
+
 
 document.addEventListener("DOMContentLoaded", () =>{
   console.log("Ive been Loaded!")
@@ -172,9 +175,10 @@ function toggleDisplay(articleId){
   let middleContent = document.querySelector("body > div.row > div.column.middle > div.middleContent")
   let toggledBar = document.querySelector("#toggledBar")
   let myTopnav = document.querySelector("#myTopnav")
-  let faveId = document.querySelector(`#fave-id`)
   let artId = document.querySelector(`#art-id`)
-
+  let favButton = document.querySelector(`#art-${articleId}`)
+  let faveId = document.querySelector(`#fave-${articleId}`)
+  let faveIds = document.querySelectorAll(`.fav`)
   if (toggle.style.display === "none"){
     toggle.style.display = "block";
     toggledBar.style.display ="inline-block"
@@ -182,20 +186,34 @@ function toggleDisplay(articleId){
     middleContent.style.display = "none"
     myTopnav.style.display = "none"
 
+    if (!!faveId) {
+      if (faveId.innerText === artId.dataset.id){
+
+        favButton.innerHTML = "unfavorite"
+
+        unfavorite(articleId)
+
+      }
+
+    }if (!!faveIds && faveIds.length > 1){
+      for (let i = 0; i < faveIds.length; i++){
+        if (i.innerText === artId.dataset.id){
+          favButton.innerHTML = "unfavorite"
+          unfavorite(articleId)
+        }
+      }
+    }
   }else {
-    if (faveId && faveId.innerText === artId.dataset.id){
-      console.log("raspberries")
-    }else{
     toggle.style.display = "none";
     toggledBar.style.display = "none"
     middleContent.style.display = "block"
     myTopnav.style.display = "inline-block"
-  }}
+  }
 }
 
+
 function fetchDisplay(articleId){
-  let faveId = document.querySelector(`#fave-id`)
-  let artId = document.querySelector(`#art-id`)
+
   let toggle = document.querySelector("body > div.row > div.column.middle > div.column.toggle")
   document.querySelector("body > div.row > div.column.middle").scrollTo(0,0)
   let indextog = document.querySelector("#indextog")
@@ -206,7 +224,7 @@ function fetchDisplay(articleId){
     const articleMarkup = `
     <h2>${article.title}</h2>
       <p id="art-id" data-id=${article.id} style="display:none">${article.id}</p>
-      <span><img src=${article.image_url}><button style="float: right; align:center; margin-right: 10px;"class="favorite" id=art-${article.id}>heart</button></spn>
+      <span><img src=${article.image_url}><button style="float: right; align:center; margin-right: 10px;"class="favorite-button" id=art-${article.id}>favorite</button></spn>
       <h3>${article.author}, ${article.news_org}</h3>
       <p>${article.content}</p>
     </li>`
@@ -377,10 +395,12 @@ function favorite(articleId){
 }
 function favoriteMark(e){
   e.preventDefault
+
+  if (numberFaves <=3 ){
   let articleId = parseInt(document.querySelector("#art-id").dataset.id)
   console.log(articleId)
   console.log(userId)
-
+  console.log(numberFaves)
   fetch(favePoint, {
     method: "POST",
     headers: {
@@ -396,26 +416,45 @@ function favoriteMark(e){
     console.log(fave)
 
     let faveOne = document.querySelector("body > div.row > div.column.right > div:nth-child(2)")
+
+
     let faveTwo = document.querySelector("body > div.row > div.column.right > div:nth-child(3)")
+
+
     let faveThree = document.querySelector("body > div.row > div.column.right > div:nth-child(4)")
+
     let faveMarkUp = `
     <h4 style="white-space: normal">${fave.data.attributes.article.title}</h4>
-    <p id=fave-id data=${fave.data.attributes.article.id} stye="display:none">${fave.data.attributes.article.id}</p>
+    <p id=fave-${fave.data.attributes.article.id} class=favorites data=${fave.data.attributes.article.id} stye="display:none">${fave.data.attributes.article.id}</p>
     <a onclick="fetchDisplay(${fave.data.attributes.article.id})"><img style="white-space: normal" class=faveimg src="${fave.data.attributes.article.image_url}"></img></a>
     `
-    if (faveOne.innerText === "" && faveMarkUp != faveTwo.innerHTML && faveMarkUp != faveThree.innerHTML){
-      faveOne.innerHTML = faveMarkUp
-      debugger
+    if (faveOne.innerText === ""){
+      faveOne.innerHTML = faveMarkUp;
+        numberFaves += 1;
       unfavorite(articleId)
-    }else if (faveTwo.innerText === "" && faveMarkUp != faveOne.innerHTML && faveMarkUp != faveThree.innerHTML){
-      debugger
-      faveTwo.innerHTML = faveMarkUp
-      unfavorite(articleId)
-    }else if(faveThree.innerText === ""&& faveMarkUp != faveTwo.innerHTML && faveMarkUp != faveTwo.innerHTML){
-      faveThree.innerHTML = faveMarkUp
-      unfavorite(articleId)
+    }else if (faveTwo.innerText === ""){
+      if(faveOne.childNodes[3].innerText){
+        if(articleId != faveOne.childNodes[3].innerText){
+          faveTwo.innerHTML = faveMarkUp
+            numberFaves += 1;
+          unfavorite(articleId)
+        }
+      }
+    } else if(faveThree.innerText === ""){
+      if(faveTwo.childNodes[3].innerText){
+        if(articleId != faveOne.childNodes[3].innerText && articleId != faveTwo.childNodes[3].innerText){
+          faveThree.innerHTML = faveMarkUp
+            numberFaves += 1;
+
+          unfavorite(articleId)
+        }
+      }
     }
   })
+  }else{
+  console.log("too many likes!")
+  alert("You may only have Three favorited articles, please unfavorite one to proceed")
+}
 }
 
 function unfavorite(articleId){
@@ -424,19 +463,23 @@ function unfavorite(articleId){
   favoriteButton.removeEventListener("click", favoriteMark, true)
   favoriteButton.addEventListener("click", clearFave, true)
 
-
 }
 
 function clearFave(e){
   e.preventDefault
-  let faveParent = document.querySelector(`#fave-id`).parentElement
   let artId = document.querySelector(`#art-id`).dataset.id
+  let faveParent = document.querySelector(`#fave-${artId}`).parentElement
   let favoriteButton = document.querySelector(`#art-${artId}`)
-  let faveId = document.querySelector(`#fave-id`).innerText
+  let faveId = document.querySelector(`#fave-${artId}`).innerText
   if (artId === faveId){
     faveParent.innerHTML = " "
     document.querySelector(`#art-${artId}`).innerText = "favorite"
     favoriteButton.removeEventListener("click", clearFave, true)
+    numberFaves -= 1;
     favoriteButton.addEventListener("click", favoriteMark, true)
   }
+}
+
+function favoriteListener(){
+
 }
