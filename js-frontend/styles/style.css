@@ -13,7 +13,7 @@ img {
 .article-img{
   margin: 10px;
 }
-.fave-img{
+.faveimg{
   height:30px;
   width:30px;
 }
@@ -102,15 +102,7 @@ flex-shrink: 1;
   overflow: scroll;
 
 }
-.draggable{
-  cursor:move;
-  style:strong;
-  border-style: solid;
-  border-color: green;
-}
-.draggable.dragging{
-  opacity: .5;
-}
+
 
 .middle {
   width: 50%;
@@ -178,6 +170,10 @@ li:last-child {
 
 #favorite{
   float:right;
+
+}
+.favorites{
+  display: none;
 }
 /* Clear floats after the columns */
 .row:after {
