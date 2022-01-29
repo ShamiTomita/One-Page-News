@@ -1,10 +1,11 @@
 require 'news-api'
 require 'area'
-
+Article.destroy_all
+User.destroy_all
 newsapi = News.new("942d82be5ab04c0e810e412394d04c7a")
 sources = newsapi.get_sources(country: 'us', language: 'en')
 #business entertainment general health science sports technology
-all_articles = newsapi.get_everything(sources: 'bbc-news,the-verge,nbc-news,cnn,reuters,politico,abc-news,NPR', language: 'en', from: '2021-12-20')
+all_articles = newsapi.get_everything(sources: 'bbc-news,the-verge,nbc-news,cnn,reuters,politico,abc-news,NPR', language: 'en', from: '2022-1-01')
 #use this to go through first
 business_articles = newsapi.get_top_headlines(category: 'business', language: 'en', country:'us')
 entertainment_articles = newsapi.get_top_headlines(category: 'entertainment', language: 'en', country:'us')
@@ -39,6 +40,7 @@ def createArticles(article_array)
 end
 
 user = User.create(name: "shami", zipcode: "78249")
+
 business_array =  createArticles(business_articles)
 business_array.each do |article|
   article.category = "business"
@@ -77,6 +79,6 @@ top_array.each do |article|
   article.save
 end
 
-
+fave = FavoritedArticle.create(user_id: user.id, article_id:Article.first.id)
 
 #WEATHER
