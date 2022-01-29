@@ -186,6 +186,7 @@ li:last-child {
   margin-top: 10px;
   position: relative;
   max-width: 800;
+  height: 60px;
   overflow: hidden;
 
 
@@ -210,7 +211,7 @@ overflow: hidden;
   text-decoration: none;
 }
 .hitem{
-  padding-top: 10px;
+  padding-top: 15px;
   flex-shrink: 0;
   width: 100%;
   box-sizing: border-box;
@@ -220,5 +221,5 @@ overflow: hidden;
   0% { transform: translate3d(100%, 0, 0); }
   100% { transform: translate3d(-2000%, 0, 0); }
 }
-.hmove { animation: tickerh linear 120s infinite; }
+.hmove { animation: tickerh linear 250s infinite; }
 .hmove:hover { animation-play-state: paused; }

@@ -26,18 +26,19 @@ function getArticles(){
   let business = []
   let topArts = []
   let all = []
-
+  let counter = 0
   fetch(endPoint)
   .then(response => response.json())
   .then(articles=>{
 
     articles.data.forEach((article) => {
       let id = article.id
-      let tickerMarkUp = ` <div class=hitem><a id=ticker-${id}class="article-link" href=${article.attributes.url} onclick="toggleRedirect(${id})">${article.attributes.title}</a></div>`
+      let tickerMarkUp = ` <div class=hitem><a id=ticker-${id}class="article-link" href=${article.attributes.url} onclick="toggleRedirect(${id})">  ${article.attributes.title}  </a></div>`
       let ticker = document.querySelector(".hmove")
-      if (article.attributes.is_top === true){
 
-        ticker.innerHTML+=tickerMarkUp
+      if (article.attributes.is_top === true && counter <20){
+          counter++
+          ticker.innerHTML+=tickerMarkUp
       }
       if (article.attributes.category === "health"){
         health.push(article)
@@ -66,7 +67,7 @@ function getArticles(){
       stopLink();
 
     });
-
+    debugger
     let healthButton = document.querySelector("#myTopnav > a:nth-child(2)")
     let scienceButton = document.querySelector("#myTopnav > a:nth-child(3)")
     let entertainmentButton = document.querySelector("#myTopnav > a:nth-child(4)")
@@ -216,9 +217,9 @@ function fetchDisplay(articleId){
       <p>${article.content}</p>
     </li>`
 
-    debugger
+
     if (!!faveId && faveIds.length == 1) {
-      debugger
+
       if (faveId.innerText === artId.dataset.id && toggle.style.display==="none"){
 
         toggle.innerHTML = articleMarkup;
@@ -227,37 +228,37 @@ function fetchDisplay(articleId){
 
         toggleDisplay(artId.dataset.id)
         unfavorite(articleId)
-        debugger
+
       }else if (faveId.innerText === artId.dataset.id && toggle.style.display==="block") {
 
-        debugger
+
         unfavorite(articleId)
       }else if (faveId.innerText != artId.dataset.id && toggle.style.display==="block"){
-        debugger
+
       toggle.innerHTML = articleMarkup;
       indextog.innerHTML = `${article.category}`
       let favButton = document.querySelector(`.favorite-button`)
       unfavorite(articleId)
   /*somethings up here when trying to remove the last fave*/
     }else if (faveId.innerText != artId.dataset.id && toggle.style.display==="none"){
-      debugger
+
       toggle.innerHTML = articleMarkup;
       let favButton = document.querySelector(`#art-${articleId}`)
       indextog.innerHTML = `${article.category}`
       unfavorite(articleId)
-      debugger
+
       toggleDisplay(artId.dataset.id)
     }
     }else if (!!faveIds && faveIds.length > 1 && toggle.style.display === "block"){
 
       for (let i = 0; i < faveIds.length; i++){
-        debugger /*stuck in loop with favIds.length == 2*/
+
         if (faveIds[i].innerText === articleId.toString()){
             /*theres something weird going on in the for loop, it seems to keep going and going instead of stopping at first one*/
           toggle.innerHTML = articleMarkup;
           let favButton = document.querySelector(`#art-${articleId}`)
 
-          debugger
+
           unfavorite(articleId)
           break;
             /*toggle must be marked up with the fave Id*/
@@ -266,7 +267,7 @@ function fetchDisplay(articleId){
         }else{
           toggle.innerHTML = articleMarkup;
           /*stuck on loop here*/
-          debugger
+
           let favButton = document.querySelector(`.favorite-button`)
           if (favButton.innerText === "favorite"){
             /*let faveIds = document.querySelectorAll(`.favorites`)
@@ -282,52 +283,41 @@ function fetchDisplay(articleId){
 
 
           }else{
-            debugger
+
             favButton.innerText = "favorite"
             favorite(articleId)
           }
         }
       }
     } else if (toggle.style.display === "block" && artId != articleId){
-      debugger
+
       toggle.innerHTML = articleMarkup;
       toggle.style.display = "none"
       indextog.innerHTML = `${article.category}`
       toggleDisplay(articleId);
     }else if(toggle.style.display === "block" && artId == articleId){
-      debugger
+
 
 
       unfavorite(articleId)
     }else{
-      debugger
+
       toggle.innerHTML = articleMarkup;
       indextog.innerHTML = `${article.category}`
-      if(faveIds.length > 1){
-        for (i =0; i < faveIds.length; i++){
-          if (faveIds[i].innerText === articleId.toString()){
-            debugger
-            /*problem here, might have to remove addEventListener maybe?*/
-
+      if(!!faveId){
             toggleDisplay(articleId)
-              unfavorite(articleId)
-            break;
-          }else{
-            /*im making an article show*/
-            debugger
+            unfavorite(articleId)
+          }else if(!faveId){
+              favorite(articleId)
+              toggleDisplay(articleId)
 
-            toggleDisplay(articleId);
-            console.log("?")
-            break;
+            }else{
+              console.log("?")
+
+            }
           }
-        }
-      }else{
-        debugger
-        toggleDisplay(articleId);
       }
-    }
-  })
-}
+  )}
 
 function signIn(){
   let b = document.querySelector("#sign-in")
@@ -491,9 +481,9 @@ function favoriteMark(e){
   e.preventDefault
   let favoriteButton = document.querySelector(".favorite-button")
   if (!!favoriteButton){
-    debugger
+
     if (favoriteButton.innerText === "unfavorite"){
-      debugger
+
       favoriteButton.removeEventListener("click", favoriteMark)
       favoriteButton.addEventListener("click", clearFave)
     }
@@ -561,7 +551,7 @@ function favoriteMark(e){
 }
 
 function unfavorite(articleId){
-  debugger
+
   let favoriteButton = document.querySelector(`.favorite-button`)
   favoriteButton.innerText = "unfavorite"
   favoriteButton.removeEventListener("click", favoriteMark, true)
@@ -570,9 +560,9 @@ function unfavorite(articleId){
 }
 
 function clearFave(e){
-  debugger
   e.preventDefault
   let artId = document.querySelector(`#art-id`).dataset.id
+
   let faveParent = document.querySelector(`#fave-${artId}`).parentElement
   let favoriteButton = document.querySelector(`#art-${artId}`)
   let faveId = document.querySelector(`#fave-${artId}`).innerText
@@ -590,7 +580,7 @@ function favoriteListener(){
 
   let favoriteButton = document.querySelector(".favorite-button")
   if (!!favoriteButton && numberFaves < 3){
-    debugger
+
     if(favoriteButton.innerText === "favorite"){
       favoriteButton.addEventListener("click", favoriteMark, true)
     }
@@ -608,6 +598,6 @@ function toggleRedirect(articleId){
   let faveId = document.querySelector(`#fave-${articleId}`)
   let faveIds = document.querySelectorAll(`.favorites`)
   let artId = document.querySelector(`#art-id`)
-  debugger
+
   fetchDisplay(articleId)
 }
