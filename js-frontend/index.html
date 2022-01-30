@@ -14,7 +14,7 @@
           <h1>Hi! Please provide your name and zipcode</h1>
           <input id="input-name" type="text" name="name" value="" placeholder="Enter Name" required>
           <br></br>
-          <input id="input-zipcode" type="text" name="zipcode" value="" placeholder="Enter Zipcode" required>
+          <input id="input-zipcode" type="text" pattern="\d{5}" maxlength="5" minlength="5" name="zipcode" value="" placeholder="Enter Zipcode" required>
           <br></br>
           <input id= 'create-button' type="submit" name="submit" value="Lets Get Started!" class="submit">
         </form>
@@ -83,11 +83,11 @@
 
           <div class="topnav" id="myTopnav">
 
-          <a id="index" href="#home" >All News</a>
-          <a class="category" onclick="" href="#news">Health</a>
-          <a class="category" onclick="" href="#news">Science</a>
-          <a class="category" onclick="" href="#news">Entertainment</a>
-          <a class="category"onclick="" href="#news">Business</a>
+          <a class="button" href="#home" >All News</a>
+          <a class="button" onclick= href="#news">Health</a>
+          <a class="button" onclick="" href="#news">Science</a>
+          <a class="button" onclick="" href="#news">Entertainment</a>
+          <a class="button" onclick="" href="#news">Business</a>
 
 
         </div>
@@ -122,7 +122,7 @@
 
         </div>
         <div class="rowright">
-          
+
         </div>
       </div>
     </div>

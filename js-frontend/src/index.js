@@ -67,20 +67,22 @@ function getArticles(){
       stopLink();
 
     });
-    debugger
+    /*divide*/
     let healthButton = document.querySelector("#myTopnav > a:nth-child(2)")
     let scienceButton = document.querySelector("#myTopnav > a:nth-child(3)")
     let entertainmentButton = document.querySelector("#myTopnav > a:nth-child(4)")
     let businessButton = document.querySelector("#myTopnav > a:nth-child(5)")
     let art = document.querySelector('#articles')
-    let index = document.querySelector("#index")
+    let index = document.querySelector("#myTopnav > a:nth-child(1)")
 
     buttons = []
     buttons.push(healthButton, scienceButton, entertainmentButton, businessButton, index)
 
     buttons.forEach(function(button){
+
       button.addEventListener("click", e => {
         if (button === index ){
+          highlightButton(button)
           art.innerHTML = ""
           all.forEach(article => {
             let id = article.id
@@ -95,6 +97,7 @@ function getArticles(){
         }
         if (button === healthButton){
           console.log('health')
+          highlightButton(button)
           art.innerHTML = ""
           health.forEach(article => {
             let id = article.id
@@ -109,6 +112,7 @@ function getArticles(){
         }
         if (button === entertainmentButton){
           console.log('entertainment')
+          highlightButton(button)
           art.innerHTML = ""
           entertainment.forEach(article => {
             let id = article.id
@@ -124,6 +128,7 @@ function getArticles(){
         }
         if (button === scienceButton){
           console.log('science')
+          highlightButton(button)
           art.innerHTML = ""
           science.forEach(article => {
             let id = article.id
@@ -138,6 +143,7 @@ function getArticles(){
         }
         if (button === businessButton){
           console.log('business')
+          highlightButton(button)
           art.innerHTML = ""
           business.forEach(article => {
             let id = article.id
@@ -517,7 +523,7 @@ function favoriteMark(e){
     let faveMarkUp = `
     <h4 style="white-space: normal">${fave.data.attributes.article.title}</h4>
     <p id=fave-${fave.data.attributes.article.id} class=favorites data=${fave.data.attributes.article.id} stye="display:none">${fave.data.attributes.article.id}</p>
-    <a class="fetch" onclick="toggleRedirect(${fave.data.attributes.article.id})"><img style="white-space: normal" class=faveimg src="${fave.data.attributes.article.image_url}"></img></a>
+    <a class="fetch" onclick="toggleRedirect(${fave.data.attributes.article.id})"><img style="white-space: normal"  style="border-color: pink" class=faveimg src="${fave.data.attributes.article.image_url}"></img></a>
     `
     if (faveOne.innerText === ""){
       faveOne.innerHTML = faveMarkUp;
@@ -600,4 +606,19 @@ function toggleRedirect(articleId){
   let artId = document.querySelector(`#art-id`)
 
   fetchDisplay(articleId)
+}
+
+function highlightButton(button){
+  console.log("im selected")
+    /*button.classList.add('selected')*/
+    buttons = document.querySelectorAll(".button")
+    for (i =0; i<buttons.length; i++){
+      if (buttons[i].id === "selected"){
+        console.log("buttons[i] id removed")
+        buttons[i].removeAttribute('id')
+      }
+    }
+    button.id = "selected"
+    console.log("added the selected id")
+
 }

@@ -3,6 +3,13 @@
   text-align: left;
   padding: 2px;
   width: 100%;
+  padding-left: 20px;
+  opacity: .8;
+}
+
+body{
+  background-image: url("https://wallpaperaccess.com/full/2125366.jpg");
+  background-size: cover;
 }
 img {
   width:10%;
@@ -16,6 +23,12 @@ img {
 .faveimg{
   height:30px;
   width:30px;
+  border-style: dashed;
+  border-color:yellow;
+}
+.faveimg:hover{
+  border-style: solid;
+  border-color:green;
 }
 .table-icon{
   height:30px;
@@ -32,7 +45,7 @@ img {
   z-index: 1;
   visibility: visible;
   display: block;
-
+  padding: 90px;
 }
  p.w{
   margin:0
@@ -54,13 +67,15 @@ h5{
   float: left;
   height: 500px; /* Should be removed. Only for demonstration */
   margin-top: 1%;
-
+  background-color: azure;
+  opacity: 0.9;
 
 }
 
 .left, .right {
   width: 25%;
-  border-style: dashed;
+  border-style: solid;
+  border-color: #8cb3d9;
   align-items: center;
   justify-content: center;
   text-align: center;
@@ -69,10 +84,11 @@ h5{
 .weatherheader{
   width: 100%;
   text-align: center;
-  border-style: solid;
+  background-color: #6699cc;
   overflow: auto;
   white-space: nowrap;
   position: sticky;
+  height: 60px;
 }
 
 table{
@@ -86,8 +102,9 @@ table, th, td {
 }
 .pinnedheader{
   width: 100%;
+  height: 60px;
   text-align: center;
-  border-style: solid;
+  background-color: #6699cc;
   overflow: auto;
   white-space: nowrap;
   position: sticky;
@@ -96,9 +113,10 @@ table, th, td {
 .rowright{
   height: 29%;
   width: 100%;
-  border-style: dashed;
+  border-style: solid;
+  border-color: aliceblue;
   white-space: nowrap;
-flex-shrink: 1;
+  flex-shrink: 1;
   overflow: scroll;
 
 }
@@ -107,16 +125,20 @@ flex-shrink: 1;
 .middle {
   width: 50%;
   border-style: solid;
+  border-color: #8cb3d9;
   overflow-y: scroll;
 
 }
 div.middleheader{
-  background-color: #333;
+  opacity: 1;
+  background-color: #336699;
  overflow: auto;
  white-space: nowrap;
- height: auto;
+ height: 60px;
  position: fixed;
  width: 49%;
+
+
 
 }
 
@@ -126,6 +148,17 @@ color: white;
 text-align: center;
 padding: 18px;
 text-decoration: none;
+}
+
+#selected{
+  background-color: green;
+}
+.button{
+
+}
+div.topnav a:hover{
+  border-style: dashed;
+  border-color: aqua;
 }
 
 li:last-child {
@@ -147,15 +180,17 @@ li:last-child {
   padding-top: 50px;
   padding-left: 10px;
   border-style: solid;
-  background-color: pink;
+  background-color: azure;
   display: block;
   margin-top: 0;
+  opacity: 1;
 
 }
 
 #toggledBar{
+  opacity: 1;
   display: inline-block;
-  background-color: red;
+  background-color: cadetblue;
   text-align: left;
   text-decoration: none;
   float:left;
@@ -164,6 +199,7 @@ li:last-child {
   position: relative;
   display: inline-block;
   width:100%;
+  height:60px;
   margin-right: 10px;
 
 }
@@ -182,7 +218,8 @@ li:last-child {
   clear: both;
 }
 .footer {
-  background: #ddd;
+  background: azure;
+  opacity: .8;
   margin-top: 10px;
   position: relative;
   max-width: 800;
