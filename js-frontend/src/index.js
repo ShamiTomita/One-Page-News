@@ -12,151 +12,101 @@ document.addEventListener("DOMContentLoaded", () =>{
   addDays();
   signIn();
   getArticles();
+  buttonController();
   toggleDisplay();
   favoriteListener();
-
+  debugger
 
 
 })
 
 function getArticles(){
-  let health= []
-  let science = []
-  let entertainment = []
-  let business = []
-  let topArts = []
-  let all = []
   let counter = 0
   fetch(endPoint)
   .then(response => response.json())
   .then(articles=>{
 
     articles.data.forEach((article) => {
-      let id = article.id
-      let tickerMarkUp = ` <div class=hitem><a id=ticker-${id}class="article-link" href=${article.attributes.url} onclick="toggleRedirect(${id})">  ${article.attributes.title}  </a></div>`
       let ticker = document.querySelector(".hmove")
+      console.log(article)
+      let newArticle = new Article(article.id, article.attributes)
 
-      if (article.attributes.is_top === true && counter <20){
+      /*remove & replace*/
+      if (newArticle.is_top === true && counter <20){
+        
           counter++
-          ticker.innerHTML+=tickerMarkUp
+          ticker.innerHTML += newArticle.renderTicker();
       }
-      if (article.attributes.category === "health"){
-        health.push(article)
-        all.push(article)
-      }
-      if (article.attributes.category === "science") {
-        science.push(article)
-        all.push(article)
-      }
-      if (article.attributes.category === "entertainment"){
-        entertainment.push(article)
-        all.push(article)
-      }
-      if (article.attributes.category === "business") {
-        business.push(article)
-        all.push(article)
-      }
-
-      let articleMarkup = `
-      <div id=${article.id}>
-        <img src=${article.attributes.image_url}>
-        <a id=${article.id} class="article-link" href=${article.attributes.url} onclick="fetchDisplay(${id})" >${article.attributes.title}</a>
-      </div>`
-
-      document.querySelector('#articles').innerHTML += articleMarkup
+      document.querySelector('#articles').innerHTML += newArticle.renderArticleIndexItem();
       stopLink();
 
     });
-    debugger
-    let healthButton = document.querySelector("#myTopnav > a:nth-child(2)")
-    let scienceButton = document.querySelector("#myTopnav > a:nth-child(3)")
-    let entertainmentButton = document.querySelector("#myTopnav > a:nth-child(4)")
-    let businessButton = document.querySelector("#myTopnav > a:nth-child(5)")
-    let art = document.querySelector('#articles')
-    let index = document.querySelector("#index")
-
-    buttons = []
-    buttons.push(healthButton, scienceButton, entertainmentButton, businessButton, index)
-
-    buttons.forEach(function(button){
-      button.addEventListener("click", e => {
-        if (button === index ){
-          art.innerHTML = ""
-          all.forEach(article => {
-            let id = article.id
-            const articleMarkup = `
-            <div id=${article.id} >
-              <img src=${article.attributes.image_url}>
-              <a id=${article.id} class="article-link" href=${article.attributes.url} onclick="fetchDisplay(${id})">${article.attributes.title}</a>
-            </div>`
-            art.innerHTML += articleMarkup
-            stopLink();
-          });
-        }
-        if (button === healthButton){
-          console.log('health')
-          art.innerHTML = ""
-          health.forEach(article => {
-            let id = article.id
-            const articleMarkup = `
-            <div id=${article.id}>
-              <img src=${article.attributes.image_url}>
-              <a id=${article.id} class="article-link" href=${article.attributes.url} onclick="fetchDisplay(${id})"> ${article.attributes.title} </a>
-             </div> `
-            art.innerHTML += articleMarkup
-            stopLink();
-          });
-        }
-        if (button === entertainmentButton){
-          console.log('entertainment')
-          art.innerHTML = ""
-          entertainment.forEach(article => {
-            let id = article.id
-            const articleMarkup = `
-            <div id=${article.id} >
-              <img src=${article.attributes.image_url}>
-              <a id=${article.id} class="article-link" href=${article.attributes.url} onclick="fetchDisplay(${id})">${article.attributes.title}</a>
-            </div>`
-            art.innerHTML += articleMarkup
-            stopLink();
-          });
-
-        }
-        if (button === scienceButton){
-          console.log('science')
-          art.innerHTML = ""
-          science.forEach(article => {
-            let id = article.id
-            const articleMarkup = `
-            <div id=${article.id} >
-              <img class="article-img"src=${article.attributes.image_url}>
-              <a id=${article.id} class="article-link" href=${article.attributes.url} onclick="fetchDisplay(${id})">${article.attributes.title}</a>
-            </div>`
-            art.innerHTML += articleMarkup
-            stopLink();
-          });
-        }
-        if (button === businessButton){
-          console.log('business')
-          art.innerHTML = ""
-          business.forEach(article => {
-            let id = article.id
-            const articleMarkup = `
-            <div id=${article.id}>
-              <img src=${article.attributes.image_url}>
-              <a id=${article.id} class="article-link" href=${article.attributes.url} onclick="fetchDisplay(${id})">${article.attributes.title}</a>
-            </div>`
-            art.innerHTML += articleMarkup
-            stopLink();
-          });
-        }
-      })
-    });
   })
-
 }
+function buttonController(){
+  let healthButton = document.querySelector("#myTopnav > a:nth-child(2)")
+  let scienceButton = document.querySelector("#myTopnav > a:nth-child(3)")
+  let entertainmentButton = document.querySelector("#myTopnav > a:nth-child(4)")
+  let businessButton = document.querySelector("#myTopnav > a:nth-child(5)")
+  let art = document.querySelector('#articles')
+  let index = document.querySelector("#myTopnav > a:nth-child(1)")
 
+  buttons = []
+  buttons.push(healthButton, scienceButton, entertainmentButton, businessButton, index)
 
+  buttons.forEach(function(button){
+
+    button.addEventListener("click", e => {
+      if (button === index ){
+        highlightButton(button)
+        art.innerHTML = ""
+        Article.all.forEach(article => {
+        art.innerHTML += article.renderArticleIndexItem();
+
+        stopLink();
+        });
+      }
+      if (button === healthButton){
+        console.log('health')
+        highlightButton(button)
+        art.innerHTML = ""
+        Article.health.forEach(article => {
+          art.innerHTML += article.renderArticleIndexItem();
+
+          stopLink();
+        });
+      }
+      if (button === entertainmentButton){
+        console.log('entertainment')
+        highlightButton(button)
+        art.innerHTML = ""
+        Article.entertainment.forEach(article => {
+          art.innerHTML += article.renderArticleIndexItem();
+          stopLink();
+        });
+
+      }
+      if (button === scienceButton){
+        console.log('science')
+        highlightButton(button)
+        art.innerHTML = ""
+        Article.science.forEach(article => {
+          art.innerHTML += article.renderArticleIndexItem();
+          stopLink();
+        });
+      }
+      if (button === businessButton){
+        console.log('business')
+        highlightButton(button)
+        art.innerHTML = ""
+        Article.business.forEach(article => {
+          art.innerHTML += article.renderArticleIndexItem();
+          stopLink();
+        });
+      }
+    })
+  })
+}
 
 function stopLink(){
 let anchors = document.getElementsByTagName('a')
@@ -204,105 +154,61 @@ function fetchDisplay(articleId){
   let faveId = document.querySelector(`#fave-${articleId}`)
   let faveIds = document.querySelectorAll(`.favorites`)
   let artId = document.querySelector(`#art-id`)
-  let articleEndPoint = (endPoint+`/${articleId}`)
 
-  fetch(articleEndPoint)
-  .then(response => response.json())
-  .then(article=>{
-    const articleMarkup = `
-    <h2>${article.title}</h2>
-      <p id="art-id" data-id=${article.id} style="display:none">${article.id}</p>
-      <span><img src=${article.image_url}><button style="float: right; align:center; margin-right: 10px;"class="favorite-button" id=art-${article.id}>favorite</button></spn>
-      <h3>${article.author}, ${article.news_org}</h3>
-      <p>${article.content}</p>
-    </li>`
-
-
+  let article = Article.findById(`${articleId}`)
     if (!!faveId && faveIds.length == 1) {
 
       if (faveId.innerText === artId.dataset.id && toggle.style.display==="none"){
-
-        toggle.innerHTML = articleMarkup;
+        toggle.innerHTML = article.renderArticle();
         let favButton = document.querySelector(`#art-${articleId}`)
         indextog.innerHTML = `${article.category}`
-
         toggleDisplay(artId.dataset.id)
         unfavorite(articleId)
 
       }else if (faveId.innerText === artId.dataset.id && toggle.style.display==="block") {
-
-
         unfavorite(articleId)
+
       }else if (faveId.innerText != artId.dataset.id && toggle.style.display==="block"){
+        toggle.innerHTML = article.renderArticle();
+        indextog.innerHTML = `${article.category}`
+        let favButton = document.querySelector(`.favorite-button`)
+        unfavorite(articleId)
 
-      toggle.innerHTML = articleMarkup;
-      indextog.innerHTML = `${article.category}`
-      let favButton = document.querySelector(`.favorite-button`)
-      unfavorite(articleId)
-  /*somethings up here when trying to remove the last fave*/
-    }else if (faveId.innerText != artId.dataset.id && toggle.style.display==="none"){
-
-      toggle.innerHTML = articleMarkup;
-      let favButton = document.querySelector(`#art-${articleId}`)
-      indextog.innerHTML = `${article.category}`
-      unfavorite(articleId)
-
-      toggleDisplay(artId.dataset.id)
-    }
+      }else if (faveId.innerText != artId.dataset.id && toggle.style.display==="none"){
+        toggle.innerHTML = article.renderArticle();
+        let favButton = document.querySelector(`#art-${articleId}`)
+        indextog.innerHTML = `${article.category}`
+        unfavorite(articleId)
+        toggleDisplay(artId.dataset.id)
+      }
     }else if (!!faveIds && faveIds.length > 1 && toggle.style.display === "block"){
-
       for (let i = 0; i < faveIds.length; i++){
-
         if (faveIds[i].innerText === articleId.toString()){
-            /*theres something weird going on in the for loop, it seems to keep going and going instead of stopping at first one*/
-          toggle.innerHTML = articleMarkup;
+          toggle.innerHTML = article.renderArticle();
           let favButton = document.querySelector(`#art-${articleId}`)
-
-
           unfavorite(articleId)
           break;
-            /*toggle must be marked up with the fave Id*/
-
-
         }else{
-          toggle.innerHTML = articleMarkup;
-          /*stuck on loop here*/
-
+          toggle.innerHTML = article.renderArticle();
           let favButton = document.querySelector(`.favorite-button`)
           if (favButton.innerText === "favorite"){
-            /*let faveIds = document.querySelectorAll(`.favorites`)
-            for (i =0; i < faveIds.length; i++){
-
-              if (faveIds[i].innerText === articleId.toString()){
-                debugger
-
-                unfavorite(articleId)
-                break;
-              }else{*/
               favorite(articleId)
-
-
           }else{
-
             favButton.innerText = "favorite"
             favorite(articleId)
           }
         }
       }
-    } else if (toggle.style.display === "block" && artId != articleId){
-
-      toggle.innerHTML = articleMarkup;
+    }else if (toggle.style.display === "block" && artId != articleId){
+      toggle.innerHTML = article.renderArticle();
       toggle.style.display = "none"
       indextog.innerHTML = `${article.category}`
       toggleDisplay(articleId);
+
     }else if(toggle.style.display === "block" && artId == articleId){
-
-
-
       unfavorite(articleId)
     }else{
-
-      toggle.innerHTML = articleMarkup;
+      toggle.innerHTML = article.renderArticle();
       indextog.innerHTML = `${article.category}`
       if(!!faveId){
             toggleDisplay(articleId)
@@ -310,14 +216,11 @@ function fetchDisplay(articleId){
           }else if(!faveId){
               favorite(articleId)
               toggleDisplay(articleId)
-
-            }else{
+          }else{
               console.log("?")
-
-            }
           }
-      }
-  )}
+    }
+  }
 
 function signIn(){
   let b = document.querySelector("#sign-in")
@@ -325,9 +228,7 @@ function signIn(){
   b.addEventListener("submit", (e) => {
     createFormHandler(e)
     a.style.display="none"
-  }
-
-  )
+  })
 }
 
 function createFormHandler(e){
@@ -477,73 +378,42 @@ function favorite(articleId){
   let favoriteButton = document.querySelector(`#art-${articleId}`)
   favoriteButton.addEventListener("click", favoriteMark, true)
 }
+
 function favoriteMark(e){
   e.preventDefault
   let favoriteButton = document.querySelector(".favorite-button")
   if (!!favoriteButton){
-
     if (favoriteButton.innerText === "unfavorite"){
-
       favoriteButton.removeEventListener("click", favoriteMark)
       favoriteButton.addEventListener("click", clearFave)
     }
   }if (numberFaves < 3 ){
   let articleId = parseInt(document.querySelector("#art-id").dataset.id)
-  console.log(articleId)
-  console.log(userId)
-  console.log(numberFaves)
-  fetch(favePoint, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Accept": "application/json"},
-    body: JSON.stringify({
-      user_id: userId,
-      article_id: articleId
-    })
-  })
-  .then(response => response.json())
-  .then(fave => {
-    console.log(fave)
-
+  let article = Article.findById(`${articleId}`)
     let faveOne = document.querySelector("body > div.row > div.column.right > div:nth-child(2)")
-
-
     let faveTwo = document.querySelector("body > div.row > div.column.right > div:nth-child(3)")
-
-
     let faveThree = document.querySelector("body > div.row > div.column.right > div:nth-child(4)")
-
-    let faveMarkUp = `
-    <h4 style="white-space: normal">${fave.data.attributes.article.title}</h4>
-    <p id=fave-${fave.data.attributes.article.id} class=favorites data=${fave.data.attributes.article.id} stye="display:none">${fave.data.attributes.article.id}</p>
-    <a class="fetch" onclick="toggleRedirect(${fave.data.attributes.article.id})"><img style="white-space: normal" class=faveimg src="${fave.data.attributes.article.image_url}"></img></a>
-    `
     if (faveOne.innerText === ""){
-      faveOne.innerHTML = faveMarkUp;
+      faveOne.innerHTML = article.renderFave();
         numberFaves += 1;
       unfavorite(articleId)
     }else if (faveTwo.innerText === ""){
       if(faveOne.childNodes[3].innerText){
         if(articleId != faveOne.childNodes[3].innerText){
-          faveTwo.innerHTML = faveMarkUp
+          faveTwo.innerHTML = article.renderFave();
             numberFaves += 1;
           unfavorite(articleId)
-
         }
       }
     } else if(faveThree.innerText === ""){
       if(faveTwo.childNodes[3].innerText){
         if(articleId != faveOne.childNodes[3].innerText && articleId != faveTwo.childNodes[3].innerText){
-          faveThree.innerHTML = faveMarkUp
+          faveThree.innerHTML = article.renderFave();
             numberFaves += 1;
-
           unfavorite(articleId)
-
         }
       }
     }
-  })
   }else{
   console.log("too many likes!")
   alert("You may only have Three favorited articles, please unfavorite one to proceed")
@@ -600,4 +470,19 @@ function toggleRedirect(articleId){
   let artId = document.querySelector(`#art-id`)
 
   fetchDisplay(articleId)
+}
+
+function highlightButton(button){
+  console.log("im selected")
+    /*button.classList.add('selected')*/
+    buttons = document.querySelectorAll(".button")
+    for (i =0; i<buttons.length; i++){
+      if (buttons[i].id === "selected"){
+        console.log("buttons[i] id removed")
+        buttons[i].removeAttribute('id')
+      }
+    }
+    button.id = "selected"
+    console.log("added the selected id")
+
 }
