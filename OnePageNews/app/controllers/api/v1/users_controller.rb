@@ -1,30 +1,20 @@
 class Api::V1::UsersController < ApplicationController
   def new
-    user = User.new
-    render json: user.zipcode.latlon
-  end
-
-  def index
-    users = User.all
-
-    render json: users
-
-  end
-
-  def show
-    user = User.find_by(id: params[:id])
-    render json: user
-
+    @user = User.new
   end
 
   def create
-    @user = User.create(user_params)
-    render json: @user, status: :accepted
+    user = User.new(user_params)
+    if !user.save
+      render json: {:errors => user.errors.full_messages}
+    else
+      render json: article
+    end
   end
 
   private
   def user_params
-    params.permit(:name, :zipcode)
+    params.require(:user).permit(:name, :zipcode)
   end
 
 
