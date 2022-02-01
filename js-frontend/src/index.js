@@ -3,8 +3,7 @@ const userPoint = "http://localhost:3000/api/v1/users"
 const favePoint = "http://localhost:3000/api/v1/favorited_articles"
 let numberFaves = 0
 let userId = 0
-let faveId = document.querySelector(`#fave-id`)
-let faveIds = document.querySelectorAll(`#fave-id`)
+
 
 
 document.addEventListener("DOMContentLoaded", () =>{
@@ -13,11 +12,7 @@ document.addEventListener("DOMContentLoaded", () =>{
   signIn();
   getArticles();
   buttonController();
-  toggleDisplay();
   favoriteListener();
-
-
-
 })
 
 function getArticles(){
