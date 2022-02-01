@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", () =>{
   getArticles();
   buttonController();
   favoriteListener();
+  toggleDisplay();
 })
 
 function getArticles(){
