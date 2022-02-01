@@ -12,11 +12,7 @@ document.addEventListener("DOMContentLoaded", () =>{
   signIn();
   getArticles();
   buttonController();
-  toggleDisplay();
   favoriteListener();
-
-
-
 })
 
 function getArticles(){
