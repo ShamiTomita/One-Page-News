@@ -1,24 +1,13 @@
-# README
+# One Page News
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This single-page-application displays daily news articles covering different categories that Users can toggle between and even pin. In addition, it also provides local weather forecasts so Users can stay up to date on news and their weekly forecasts. 
 
-Things you may want to cover:
+To use:
 
-* Ruby version
+# BackEnd:
+$ run bundle 
+$ run db:reset 
+$ run rails s 
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+# Front End:
+$ open index.html
