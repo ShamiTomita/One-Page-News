@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () =>{
   buttonController();
   toggleDisplay();
   favoriteListener();
-  debugger
+
 
 
 })
@@ -33,7 +33,7 @@ function getArticles(){
 
       /*remove & replace*/
       if (newArticle.is_top === true && counter <20){
-        
+
           counter++
           ticker.innerHTML += newArticle.renderTicker();
       }
