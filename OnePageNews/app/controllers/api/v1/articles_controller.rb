@@ -2,7 +2,7 @@ class Api::V1::ArticlesController < ApplicationController
 
   def index
     articles = Article.all
-    render json: ArticleSerializer.new(articles)
+    render json: articles
   end
 
   def show
@@ -12,6 +12,6 @@ class Api::V1::ArticlesController < ApplicationController
 
   private
   def articles_params
-    params.require(:article).permit(:name, :author, :news_org, :published, :description, :url, :image_url, :content, :category, :is_top)
+    params.require(:article).permit(:name, :author, :news_org, :published, :description, :url, :image_url, :content)
   end
 end

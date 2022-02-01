@@ -8,9 +8,7 @@ class CreateArticles < ActiveRecord::Migration[6.1]
       t.string :description
       t.string :url
       t.string :image_url
-      t.string :content
-      t.string :category
-      t.boolean :is_top
+      t.text :content
       t.timestamps
     end
   end
