@@ -83,3 +83,5 @@ top_array.each do |article|
 end
 
 fave = FavoritedArticle.create(user_id: user.id, article_id:Article.first.id)
+
+#WEATHER
