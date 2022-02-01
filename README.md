@@ -5,9 +5,15 @@ This single-page-application displays daily news articles covering different cat
 To use:
 
 # BackEnd:
-$ run bundle 
-$ run db:reset 
-$ run rails s 
-
+```sh
+$ bundle
+$ db:reset 
+$ rails s
+```
 # Front End:
-$ open index.html
+```sh
+open index.html
+```
+
+Special Thanks to the creators and maintainers of the News API https://newsapi.org/ & Open Weather Map's One Call Api https://openweathermap.org/api/one-call-api whose free to use versions helped make this project possible!
+
