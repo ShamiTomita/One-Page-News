@@ -8,20 +8,15 @@
   </head>
 
   <body>
-    <div class="signInContainer">
-      <div class="form-container">
-        <form id="sign-in" style="">
-          <h1>Hi! Please provide your name and zipcode</h1>
-          <input id="input-name" type="text" name="name" value="" placeholder="Enter Name" required>
-          <br></br>
-          <input id="input-zipcode" type="text" pattern="\d{5}" maxlength="5" minlength="5" name="zipcode" value="" placeholder="Enter Zipcode" required>
-          <br></br>
-          <input id= 'create-button' type="submit" name="submit" value="Lets Get Started!" class="submit">
-        </form>
-      </div>
-    </div>
+
     <div class="header">
       <h1>One Page News</h1>
+      <div id="user-comments-div"> submitted comments will appear here inside this div </div>
+
+<form id="user-comments-form">
+	<input id="user-comments-input"  type="text">
+	<input id="user-comments-submit"  type="submit">
+</form>
     </div>
 
     <div class="row">
@@ -106,6 +101,7 @@
       <div class="column toggle">
         <h2>Article Title</h2>
         <img>
+
         <p>article body</p>
       </div>
     </div>

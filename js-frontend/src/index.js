@@ -9,11 +9,12 @@ let userId = 0
 document.addEventListener("DOMContentLoaded", () =>{
   console.log("Ive been Loaded!")
   addDays();
-  signIn();
-  getArticles();
+  //signIn();
+  //getArticles();
   buttonController();
   favoriteListener();
   toggleDisplay();
+  addUserInput();
 })
 
 function getArticles(){
@@ -480,5 +481,18 @@ function highlightButton(button){
     }
     button.id = "selected"
     console.log("added the selected id")
+
+}
+
+function addUserInput(){
+  let userForm = document.querySelector("#user-comments-form")
+  let userInput = document.querySelector("#user-comments-input")
+  let userDiv = document.querySelector("#user-comments-div")
+  userForm.addEventListener("submit", e=>{
+    e.preventDefault();
+    console.log(userInput)
+    userDiv.innerHTML += userInput.value;
+    userInput.value = ""
+  })
 
 }
