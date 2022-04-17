@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () =>{
 
 function getArticles(){
   let counter = 0
-  fetch("https://onepagenews.herokuapp.com/api/v1/articles", {mode: 'cors'})
+  fetch("https://onepagenews.herokuapp.com/api/v1/articles")
   .then(response => response.json())
   .then(articles=>{
 
