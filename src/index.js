@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () =>{
 
 function getArticles(){
   let counter = 0
-  fetch("https://onepagenews.herokuapp.com/api/v1/articles")
+  fetch("https://onepagenews.herokuapp.com/api/v1/articles", {mode: 'cors'})
   .then(response => response.json())
   .then(articles=>{
 
@@ -481,18 +481,5 @@ function highlightButton(button){
     }
     button.id = "selected"
     console.log("added the selected id")
-
-}
-
-function addUserInput(){
-  let userForm = document.querySelector("#user-comments-form")
-  let userInput = document.querySelector("#user-comments-input")
-  let userDiv = document.querySelector("#user-comments-div")
-  userForm.addEventListener("submit", e=>{
-    e.preventDefault();
-    console.log(userInput)
-    userDiv.innerHTML += userInput.value;
-    userInput.value = ""
-  })
 
 }
