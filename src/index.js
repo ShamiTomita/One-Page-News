@@ -14,7 +14,6 @@ document.addEventListener("DOMContentLoaded", () =>{
   buttonController();
   favoriteListener();
   toggleDisplay();
-  addUserInput();
 })
 
 function getArticles(){
