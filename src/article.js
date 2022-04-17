@@ -1,16 +1,16 @@
 class Article {
-  constructor(id, articleAttributes){
-    this.id = id;
-    this.title = articleAttributes.title;
-    this.category = articleAttributes.category;
-    this.author = articleAttributes.author
-    this.description = articleAttributes.description
-    this.news_org = articleAttributes.news_org
-    this.image_url = articleAttributes.image_url
-    this.url = articleAttributes.url
-    this.is_top = articleAttributes.is_top
-    this.published = articleAttributes.published
-    this.content = articleAttributes.content
+  constructor(article){
+    this.id = article.id;
+    this.title = article.title;
+    this.category = article.category;
+    this.author = article.author
+    this.description = article.description
+    this.news_org = article.news_org
+    this.image_url = article.image_url
+    this.url = article.url
+    this.is_top = article.is_top
+    this.published = article.published
+    this.content = article.content
     Article.all.push(this);
     if (this.category === "health"){
       Article.health.push(this)
