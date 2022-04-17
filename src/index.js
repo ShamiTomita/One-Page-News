@@ -258,7 +258,7 @@ function postUser(nameInput, zipcodeInput){
 
     let lat = user.lat
     let lon = user.lon
-    userId = user.id
+    let userId = user.id
     /* function should go here */
     let weatherPoint = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=imperial&exclude=minutely&appid=b7bfa861214865eea90a83b5ecc80c7e`
   fetch(weatherPoint)
