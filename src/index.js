@@ -9,8 +9,8 @@ let userId = 0
 document.addEventListener("DOMContentLoaded", () =>{
   console.log("Ive been Loaded!")
   addDays();
-  //signIn();
-  //getArticles();
+  signIn();
+  getArticles();
   buttonController();
   favoriteListener();
   toggleDisplay();
