@@ -1,6 +1,6 @@
 const endPoint = "http://localhost:3000/api/v1/articles"
-const userPoint = "http://localhost:3000/api/v1/users"
-const favePoint = "http://localhost:3000/api/v1/favorited_articles"
+const userPoint = "https://onepagenews.herokuapp.com/api/v1/users"
+const favePoint = "https://onepagenews.herokuapp.com/api/v1/favorited_articles"
 let numberFaves = 0
 let userId = 0
 
