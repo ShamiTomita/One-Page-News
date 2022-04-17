@@ -22,7 +22,7 @@ function getArticles(){
   .then(response => response.json())
   .then(articles=>{
 
-    articles.data.forEach((article) => {
+    articles.forEach((article) => {
       let ticker = document.querySelector(".hmove")
       console.log(article)
       let newArticle = new Article(article.id, article.attributes)
