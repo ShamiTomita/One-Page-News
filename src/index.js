@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () =>{
 
 function getArticles(){
   let counter = 0
-  fetch($`{API_ROOT}/articles`")
+  fetch($`{API_ROOT}/articles`)
   .then(response => response.json())
   .then(articles=>{
 
