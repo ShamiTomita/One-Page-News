@@ -25,7 +25,7 @@ function getArticles(){
     articles.data.forEach((article) => {
       let ticker = document.querySelector(".hmove")
       console.log(article)
-      let newArticle = new Article(article)
+      let newArticle = new Article(article.id, article.attributes)
 
       /*remove & replace*/
       if (newArticle.is_top === true && counter <20){
