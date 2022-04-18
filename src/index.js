@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () =>{
 
 function getArticles(){
   let counter = 0
-  fetch("http://localhost:3000/api/v1/articles")
+  fetch("http://onepagenews.herokuapp.com/api/v1/articles")
   .then(response => response.json())
   .then(articles=>{
 
