@@ -256,10 +256,10 @@ function postUser(nameInput, zipcodeInput){
       <p>${user.lat} ${user.lon}</p>
     `
 
-    let lat = user.lat
-    let lon = user.lon
-    let userId = user.id
-    console.log(user, user.id)
+    let lat = user.data.attributes.lat
+    let lon = user.data.attributes.lon
+    let userId = user.data.id
+    console.log(user, lat, lon)
     /* function should go here */
     let weatherPoint = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=imperial&exclude=minutely&appid=b7bfa861214865eea90a83b5ecc80c7e`
   fetch(weatherPoint)
