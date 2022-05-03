@@ -1,6 +1,6 @@
 # one-page-news
 
-Check Out The App!
+Check Out The Live Link!
 https://one-page-news.herokuapp.com/
 
 This single-page-application displays daily news articles covering different categories that Users can toggle between and even pin. In addition, it also provides local weather forecasts so Users can stay up to date on news and their weekly forecasts. 
@@ -12,7 +12,9 @@ To use:
 # BackEnd:
 ```sh
 $ bundle
-$ db:reset 
+$ db:create 
+$ db:migrate
+$ db:seed
 $ rails s
 ```
 # Front End:
